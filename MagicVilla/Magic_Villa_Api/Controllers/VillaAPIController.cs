@@ -17,10 +17,10 @@ namespace Magic_Villa_Api.Controllers
     {
         //Now the main question is how do we log inside our VillaAPI controller?In order to log here, we need to use dependency injection because like I said before, logging is already registered in our application. So whenever we need an implementation, we just need to ask for an implementation of logger and that will be done inside constructor.
 
-        private readonly ILogging  _logger;
+        
         public VillaAPIController(ILogging logger)
         {
-            _logger =  logger;
+            
         }
 
 
@@ -29,8 +29,8 @@ namespace Magic_Villa_Api.Controllers
 
         public ActionResult<IEnumerable<VillaDto>> GetVillas()
         {
-
-            _logger.Log("Get All Villas !" , "");
+/*
+            _logger.Log("Get All Villas !" , "");*/
 
 
             // ok object created the status code OK 200
@@ -52,8 +52,8 @@ namespace Magic_Villa_Api.Controllers
             
 
             if (id == 0)
-            {
-                _logger.Log("Get error in Villa " + id , "error");
+            {/*
+                _logger.Log("Get error in Villa " + id , "error");*/
 
                 return BadRequest(); // give status code : 400
 

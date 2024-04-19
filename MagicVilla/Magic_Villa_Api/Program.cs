@@ -1,7 +1,7 @@
 /*using Serilog;*/
 
-using Magic_Villa_Api.Logging;
-using MagicVilla_VillaAPI.Logging;
+/*using Magic_Villa_Api.Logging;
+using MagicVilla_VillaAPI.Logging;*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Services.AddControllers(option =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ILogging, LoggingV2>();
+/*builder.Services.AddSingleton<ILogging, LoggingV2>();*/
 
 
 var app = builder.Build();
