@@ -3,18 +3,35 @@ using Magic_Villa_Api.Models;
 using Magic_Villa_Api.Models.Dto;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Tasks;
+using Magic_Villa_Api.Logging;
 
 namespace Magic_Villa_Api.Controllers
 {
     [Route("api/VillaAPI")]
     [ApiController]
     public class VillaAPIController : ControllerBase
+
     {
+        //Now the main question is how do we log inside our VillaAPI controller?In order to log here, we need to use dependency injection because like I said before, logging is already registered in our application. So whenever we need an implementation, we just need to ask for an implementation of logger and that will be done inside constructor.
+
+        private readonly ILogging  _logger;
+        public VillaAPIController(ILogging logger)
+        {
+            _logger =  logger;
+        }
+
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
         public ActionResult<IEnumerable<VillaDto>> GetVillas()
         {
+
+            _logger.Log("Get All Villas !" , "");
+
 
             // ok object created the status code OK 200
             return Ok(VillaStore.VillaList);
@@ -32,8 +49,12 @@ namespace Magic_Villa_Api.Controllers
         public ActionResult<VillaDto> GetVilla(int id)
         {
 
+            
+
             if (id == 0)
             {
+                _logger.Log("Get error in Villa " + id , "error");
+
                 return BadRequest(); // give status code : 400
 
             }
