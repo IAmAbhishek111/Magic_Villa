@@ -1,14 +1,21 @@
-/*using Serilog;*/
 
+
+/*using Serilog;*/
 /*using Magic_Villa_Api.Logging;
 using MagicVilla_VillaAPI.Logging;*/
+
+using Magic_Villa_Api.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ApplicationDbContext>(option => {
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+});
 /*
-Log.Logger = new LoggerConfiguration().MinimumLevel
-    .Debug().WriteTo.File("log/villaLogs.txt", rollingInterval: RollingInterval.Day).CreateLogger();
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("log/villaLogs.txt",rollingInterval: RollingInterval.Day).CreateLogger();
 builder.Host.UseSerilog(); */
 
 
