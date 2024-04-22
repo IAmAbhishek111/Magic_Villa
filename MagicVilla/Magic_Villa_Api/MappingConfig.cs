@@ -13,11 +13,16 @@ namespace Magic_Villa_Api
             //mapping synatx
             CreateMap<Villa , VillaDto>();
             CreateMap<VillaDto, Villa>();
-
-
             CreateMap<Villa , CreateVillaDto>().ReverseMap();
             CreateMap<Villa, UpdateVillaDto>().ReverseMap();
 
+
+
+            // mapping for villa number api
+
+            CreateMap<VillaNumber, VillaNumberDto>().ReverseMap();
+            CreateMap<VillaNumber, VillaNumberCreateDto>().ReverseMap();
+            CreateMap<VillaNumber, VillaNumberUpdateDto>().ReverseMap();
 
         }
 
