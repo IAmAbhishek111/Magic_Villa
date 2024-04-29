@@ -3,12 +3,14 @@ using Magic_Villa_WebApp.Models.Dto;
 using Magic_Villa_WebApp.Services.IServices;
 using MagicVilla_Utility;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics.Metrics;
 using System.Linq;
+using System.Security.Claims;
 
 namespace Magic_Villa_WebApp.Controllers
 {
@@ -47,12 +49,17 @@ namespace Magic_Villa_WebApp.Controllers
                 LoginResponseDto model = JsonConvert.DeserializeObject<LoginResponseDto>(Convert.ToString(response.Result));
 
 
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.Name, model.User.UserName));
+                identity.AddClaim(new Claim(ClaimTypes.Role, model.User.Role));
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+
                 /* After that we want to retrieve token from there and we want to store that in our session.*/
                 HttpContext.Session.SetString(SD.SessionToken , model.Token);
 
                 return RedirectToAction("Index", "Home");
-
-
             }
 
             else
@@ -70,6 +77,7 @@ namespace Magic_Villa_WebApp.Controllers
 
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
 

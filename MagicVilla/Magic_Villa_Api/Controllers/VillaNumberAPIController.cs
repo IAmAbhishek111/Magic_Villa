@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Magic_Villa_Api.Repository.IRepository;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 /*using Magic_Villa_Api.Logging;*//**/
 
 namespace Magic_Villa_Api.Controllers
@@ -88,7 +89,9 @@ namespace Magic_Villa_Api.Controllers
 			return _response;
 		}
 
-		[HttpPost]
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -129,8 +132,9 @@ namespace Magic_Villa_Api.Controllers
 			}
 			return _response;
 		}
+        [Authorize(Roles = "admin")]
 
-		[ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpDelete("{id:int}", Name = "DeleteVillaNumber")]
@@ -161,7 +165,8 @@ namespace Magic_Villa_Api.Controllers
 			return _response;
 		}
 
-		[HttpPut("{id:int}", Name = "UpdateVillaNumber")]
+        [Authorize(Roles = "admin")]
+        [HttpPut("{id:int}", Name = "UpdateVillaNumber")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		public async Task<ActionResult<APIResponse>> UpdateVillaNumber(int id, [FromBody] VillaNumberUpdateDto updateDTO)
